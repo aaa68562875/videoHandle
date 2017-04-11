@@ -164,6 +164,8 @@
 
 - (void)initUserInterface {
     
+    self.title = @"视频裁剪";
+    
     myPlayer = [[XjAVPlayerSDK alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.width/2 + 40)];
     myPlayer.xjPlayerUrl = self.videoUrlPath.path;
     myPlayer.xjPlayerTitle = @"播放";

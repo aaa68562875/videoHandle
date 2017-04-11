@@ -42,6 +42,14 @@
     [self initUserInterface];
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    self.camera = nil;
+    self.filterView = nil;
+    self.writer = nil;
+    self.filter = nil;
+}
+
 - (void)initUserInterface {
     self.view.backgroundColor = [UIColor blackColor];
     
