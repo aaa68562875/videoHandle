@@ -35,6 +35,8 @@
     [self initUserInterface];
 }
 
+
+
 - (void)initUserInterface {
     _titileArr = @[@"录制视频+滤镜（美颜）+采集处理",@"本地视频+滤镜（美颜）+采集处理"];
     _className = @[@"CameraFilterVC",@"LocalVideoEditVC"];

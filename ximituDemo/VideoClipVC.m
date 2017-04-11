@@ -35,6 +35,11 @@
     [self initUserInterface];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [myPlayer xjStopPlayer];
+}
+
 /** 视频总时长 */
 - (CGFloat)_videoSecondes:(AVAsset*)asset {
     return asset.duration.value*1.0f/asset.duration.timescale;
