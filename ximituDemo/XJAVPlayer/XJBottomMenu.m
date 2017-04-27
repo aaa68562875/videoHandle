@@ -33,7 +33,7 @@
 
 - (void)addAllView{
     [self addSubview:self.playOrPauseBtn];
-    [self addSubview:self.nextPlayerBtn];
+//    [self addSubview:self.nextPlayerBtn];
     [self addSubview:self.loadProgressView];
     [self addSubview:self.playSlider];
     [self addSubview:self.timeLabel];
@@ -45,10 +45,10 @@
 - (void)playOrPauseAction{
     if (isPlay) {
         isPlay = NO;
-        [self.playOrPauseBtn setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+        [self.playOrPauseBtn setImage:[UIImage imageNamed:@"bofang"] forState:UIControlStateNormal];
     }else{
         isPlay = YES;
-        [self.playOrPauseBtn setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
+        [self.playOrPauseBtn setImage:[UIImage imageNamed:@"zanTing"] forState:UIControlStateNormal];
     }
     if (self.xjPlayOrPauseBlock) {
         self.xjPlayOrPauseBlock(isPlay);
@@ -140,7 +140,7 @@
 - (UIButton *)playOrPauseBtn{
     if (_playOrPauseBtn == nil) {
         _playOrPauseBtn = [[UIButton alloc] init];
-        [_playOrPauseBtn setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+        [_playOrPauseBtn setImage:[UIImage imageNamed:@"bofang"] forState:UIControlStateNormal];
         [_playOrPauseBtn addTarget:self action:@selector(playOrPauseAction) forControlEvents:UIControlEventTouchUpInside];
     }
     return _playOrPauseBtn;
@@ -166,13 +166,14 @@
     if (_playSlider == nil) {
         _playSlider = [[UISlider alloc] init];
         _playSlider.minimumValue = 0.0;
-        
         UIGraphicsBeginImageContextWithOptions((CGSize){1,1}, NO, 0.0f);
         UIImage *transparentImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-        [self.playSlider setThumbImage:[UIImage imageNamed:@"icon_progress"] forState:UIControlStateNormal];
-        [self.playSlider setMinimumTrackImage:transparentImage forState:UIControlStateNormal];
-        [self.playSlider setMaximumTrackImage:transparentImage forState:UIControlStateNormal];
+        [self.playSlider setThumbImage:[UIImage imageNamed:@"xiaoyuandian"] forState:UIControlStateNormal];
+//        [self.playSlider setMinimumTrackImage:transparentImage forState:UIControlStateNormal];
+//        [self.playSlider setMaximumTrackImage:transparentImage forState:UIControlStateNormal];
+        [self.playSlider setMinimumTrackTintColor:[UIColor whiteColor]];
+        [self.playSlider setMaximumTrackTintColor:[UIColor whiteColor]];
         
         [_playSlider addTarget:self action:@selector(playSliderValueChanging:) forControlEvents:UIControlEventValueChanged];
         [_playSlider addTarget:self action:@selector(playSliderValueDidChanged:) forControlEvents:UIControlEventTouchUpInside];
@@ -194,7 +195,7 @@
 - (UIButton *)fullOrSmallBtn{
     if (_fullOrSmallBtn == nil) {
         _fullOrSmallBtn = [[UIButton alloc] init];
-        [_fullOrSmallBtn setImage:[UIImage imageNamed:@"big"] forState:UIControlStateNormal];
+        [_fullOrSmallBtn setImage:[UIImage imageNamed:@"quanping"] forState:UIControlStateNormal];
         [_fullOrSmallBtn addTarget:self action:@selector(fullOrSmallAction) forControlEvents:UIControlEventTouchUpInside];
     }
     return _fullOrSmallBtn;
@@ -204,7 +205,7 @@
     _xjPlayEnd = xjPlayEnd;
     if (_xjPlayEnd) {
         isPlay = NO;
-        [self.playOrPauseBtn setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+        [self.playOrPauseBtn setImage:[UIImage imageNamed:@"bofang"] forState:UIControlStateNormal];
         [self.playSlider setValue:0.0 animated:YES];
         [self.loadProgressView setProgress:0.0 animated:YES];
         NSString *time = [self xjPlayerTimeStyle:self.xjTotalTime];
@@ -221,18 +222,18 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
     
-    self.playOrPauseBtn.frame = CGRectMake(self.left+5, 8, 36, 23);
+    self.playOrPauseBtn.frame = CGRectMake(self.left+5, 5, 36, 23);
     if (self.xjFull) {
-        self.nextPlayerBtn.frame = CGRectMake(self.playOrPauseBtn.right, 5, 30, 30);
+        self.nextPlayerBtn.frame = CGRectMake(self.playOrPauseBtn.right, 2, 30, 30);
         [_fullOrSmallBtn setImage:[UIImage imageNamed:@"small"] forState:UIControlStateNormal];
     }else{
-        self.nextPlayerBtn.frame = CGRectMake(self.playOrPauseBtn.right+5, 5, 0, 0);
-        [_fullOrSmallBtn setImage:[UIImage imageNamed:@"big"] forState:UIControlStateNormal];
+        self.nextPlayerBtn.frame = CGRectMake(self.playOrPauseBtn.right+5, 2, 0, 0);
+        [_fullOrSmallBtn setImage:[UIImage imageNamed:@"quanping"] forState:UIControlStateNormal];
     }
     self.fullOrSmallBtn.frame = CGRectMake(self.width-35, 0, 35, self.height);
-    self.timeLabel.frame = CGRectMake(self.fullOrSmallBtn.left-108, 10, 108, 20);
-    self.loadProgressView.frame = CGRectMake(self.playOrPauseBtn.right+self.nextPlayerBtn.width+7, 20,self.timeLabel.left-self.playOrPauseBtn.right-self.nextPlayerBtn.width-14, 31);
-    self.playSlider.frame = CGRectMake(self.playOrPauseBtn.right+self.nextPlayerBtn.width+5, 5, self.loadProgressView.width+4, 31);
+    self.timeLabel.frame = CGRectMake(self.fullOrSmallBtn.left-108, 7, 108, 20);
+    self.loadProgressView.frame = CGRectMake(self.playOrPauseBtn.right+self.nextPlayerBtn.width+7, 17,self.timeLabel.left-self.playOrPauseBtn.right-self.nextPlayerBtn.width-14, 31);
+    self.playSlider.frame = CGRectMake(self.playOrPauseBtn.right+self.nextPlayerBtn.width+5, 2, self.loadProgressView.width+4, 31);
 }
 
 @end

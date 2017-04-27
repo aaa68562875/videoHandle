@@ -31,6 +31,8 @@
 
 @property (nonatomic, strong) UIActivityIndicatorView *loadingView;//菊花图
 
+@property (strong, nonatomic) UIButton *playBtn;
+
 @end
 
 @implementation XjAVPlayerSDK
@@ -46,9 +48,11 @@
 
 - (void)addAllView{
     
-    [self.backView addSubview:self.topMenu];
+//    [self.backView addSubview:self.topMenu];
+    
     [self.backView addSubview:self.bottomMenu];
     [self.backView addSubview:self.loadingView];
+    [self.backView addSubview:self.playBtn];
     [self.xjPlayer addSubview:self.backView];
     [self addSubview:self.xjPlayer];
     
@@ -130,6 +134,15 @@
         }
     };
 }
+
+#pragma mark - btn action
+- (void)playAction:(UIButton *)btn {
+    self.xjPlayer.xjPlayerUrl = self.saveUrl;
+    [self.xjPlayer xjPlay];
+    self.bottomMenu.xjPlay = YES;
+    self.playBtn.hidden = YES;
+}
+
 #pragma mark - **************************** XJGestureButton方法 **********************
 - (void)xjGestureButtonBlock{
     WS(weakSelf);
@@ -269,7 +282,7 @@
 - (XJBottomMenu *)bottomMenu{
     if (_bottomMenu == nil) {
         _bottomMenu = [[XJBottomMenu alloc] init];
-        _bottomMenu.backgroundColor = [UIColor colorWithRed:50.0/255.0 green:50.0/255.0 blue:50.0/255.0 alpha:1.0];
+        _bottomMenu.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.2];
         _bottomMenu.hidden = YES;
         [self xjBottomMenuBlock];
     }
@@ -284,6 +297,18 @@
     return _loadingView;
 }
 
+-(UIButton *)playBtn {
+    if (_playBtn == nil) {
+        _playBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _playBtn.bounds = CGRectMake(0, 0, 39, 39);
+        _playBtn.center = CGPointMake(self.width/2, self.height/2);
+        [_playBtn setImage:[UIImage imageNamed:@"vedio2"] forState:UIControlStateNormal];
+        _playBtn.hidden = NO;
+        [_playBtn addTarget:self action:@selector(playAction:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _playBtn;
+}
+
 #pragma mark - **************************** 布局 *************************************
 - (void)layoutSubviews{
     [super layoutSubviews];
@@ -291,7 +316,7 @@
     self.xjPlayer.frame = CGRectMake(0, 0, self.width, self.height);
     self.backView.frame = self.xjPlayer.frame;
     self.topMenu.frame = CGRectMake(0, self.backView.top, self.backView.width, 40);
-    self.bottomMenu.frame = CGRectMake(0, self.backView.height-40, self.backView.width, 40);
+    self.bottomMenu.frame = CGRectMake(0, self.backView.height-30, self.backView.width, 30);
     self.loadingView.center = CGPointMake(self.backView.centerX, self.backView.centerY);
 }
 
